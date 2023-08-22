@@ -17,17 +17,24 @@ jobs:
 
       - name: Build
         run: |
-          yarn build        
+          yarn build
 
-      - name: Create Sentry release
+      - name: Get Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+
+      - name: Create Sentry Release
         uses: getsentry/action-release@v1
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: "crypted-2a3c1db1d"
-          SENTRY_PROJECT: "sentry-test"
+          SENTRY_ORG: 'crypted-2a3c1db1d'
+          SENTRY_PROJECT: 'sentry-test'
         with:
           environment: production
-          version_prefix: "v"
+          version: ${{ steps.package-version.outputs.current-version}}
+          version_prefix: 'v'
+          sourcemaps: './build'
+
 
       - name: Remove sourcemap
         if: steps.my-app-build.outputs.files_exists == 'true'
