@@ -12,6 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: NPM version update
+        run: npm version patch
+
       - name: Install Dependencies
         run: yarn install
 
@@ -32,7 +35,7 @@ jobs:
         with:
           environment: production
           version: ${{ steps.package-version.outputs.current-version}}
-          version_prefix: 'v'
+          version_prefix: 'bridge-frontend-v'
           sourcemaps: './build'
 
 

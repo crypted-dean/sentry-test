@@ -6,9 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import * as Sentry from '@sentry/react';
 
 Sentry.init({
-    dsn: "https://0c788262ad4819b63011a0e5427ac13e@o4505746791399424.ingest.sentry.io/4505746791989248",
-    release: `v0.0.1`,
+    dsn: process.env.NODE_ENV === 'production' ? "https://0c788262ad4819b63011a0e5427ac13e@o4505746791399424.ingest.sentry.io/4505746791989248" : undefined,
     environment: `production`,
+    release: `v${process.env.REACT_APP_VERSION}`,
     integrations: [
         new Sentry.BrowserTracing({
             tracePropagationTargets: [`localhost`],
