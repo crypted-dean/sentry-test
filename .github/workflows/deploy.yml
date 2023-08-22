@@ -1,0 +1,35 @@
+name: Sentry Upload
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sentry-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Build
+        run: |
+          yarn build        
+
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: crypted
+          SENTRY_PROJECT: sentry-test
+        with:
+          environment: production
+          version_prefix: "v"
+
+      - name: Remove sourcemap
+        if: steps.my-app-build.outputs.files_exists == 'true'
+        run: |
+          rm -rf build/*.js.map;
