@@ -23,8 +23,8 @@ jobs:
         uses: getsentry/action-release@v1
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: crypted
-          SENTRY_PROJECT: sentry-test
+          SENTRY_ORG: "crypted-2a3c1db1d"
+          SENTRY_PROJECT: "sentry-test"
         with:
           environment: production
           version_prefix: "v"
